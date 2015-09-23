@@ -65,6 +65,9 @@ public class QuizActivity extends AppCompatActivity {
 
         //End code Dave writes ********************
     }
+
+
+
     // These are  methods that we did not write.
     // If we get to using menus, we will need them. They can be ignored for now.
 
