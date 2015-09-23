@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
@@ -15,10 +16,82 @@ public class QuizActivity extends AppCompatActivity {
     private Button mTrueButton;
     private Button mFalseButton;
 
+    //variable for the next button.
+    private Button mNextButton;
+    //variable for the question string.
+    private TextView mQuestionTextView;
+
+    //The questions that will be used. It is an array of type
+    //Questions, that contains 5 questions. It is a hard coded
+    //array. In most apps, you would want your data to come from
+    //somewhere else (database, internet). Not be hard coded.
+    private Question[] mQuestionBank = new Question[] {
+            new Question(R.string.question_oceans, true),
+            new Question(R.string.question_mideast, false),
+            new Question(R.string.question_africa,false),
+            new Question(R.string.question_america, true),
+            new Question(R.string.question_asia, true)
+    };
+
+    private int mCurrentIndex = 0;
+
+
+    //private methods that will be used inside the OnCreate
+    //Dave wrote there. Not google
+
+    private void updateQuestion(){
+
+
+
+
+        //Get the Question instance stored at the mCurrentIndex of the
+        //QuestionBank array. Then call the getTextResId method(property)
+        //to return the integer value that points the string
+        //resource in strings.xml that we want to use.
+        int question = mQuestionBank[mCurrentIndex].getTextResId();
+
+        //Assign the integer for the string resource to the
+        //TextView so that the question text will display.
+        mQuestionTextView.setText(question);
+
+    }
+
+    private void checkAnswer(boolean userPressedTrue)
+    {
+        //create a boolean to represent the actual answer of
+        //the current question we are on.
+        boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
+
+        //declare an integer that will be a pointer to the string
+        //resource that will be used for the toast message
+        int messageResId= 0 ;
+
+
+        //compare the actual answer to the answer that was passed
+        //into this method. If they match, the message is correct.
+        //else it is incorrect. Assign the R in value to the
+        //messageResId.
+        if (userPressedTrue == answerIsTrue) {
+
+            messageResId = R.string.correct_toast;
+
+        } else {
+
+            messageResId = R.string.incorrect_toast;
+        }
+
+        //make a toast, and use the messageResId for the message
+        //to show.
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+
+    }
+
+
+
 
     //Dave didn't write this method. It was given to us by google.
-    //It is the 'setup' mothod for the app.
-    //It will be called when the app lauches.
+    //It is the 'setup' method for the app.
+    //It will be called when the app launches.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +99,18 @@ public class QuizActivity extends AppCompatActivity {
 
 
         //Begin code Dave writes ********************
+
+
+
+
+        //Get a 'handle' to the TextView in the layout.
+        mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
+
+        //this is declared up above. Dave does the work of changing
+        //to the next question in the array.
+        updateQuestion();
+
+
 
         //Fetch the widget control from the view, and then
         //cast and assign it to the class variable we setup
@@ -60,6 +145,25 @@ public class QuizActivity extends AppCompatActivity {
                         R.string.incorrect_toast,
                         Toast.LENGTH_SHORT).show();
             }
+        });
+
+
+        mNextButton =(Button) findViewById(R.id.next_button);
+        mNextButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+                mCurrentIndex = (mCurrentIndex + 1 ) % mQuestionBank.length;
+
+               // This method is declared at the top of the class. It handles updating
+                //the question text.
+
+                //int question = mQuestionBank[mCurrentIndex].getTextResId();
+               // mQuestionTextView.setText(question);
+                updateQuestion();
+
+            }
+
         });
 
 
