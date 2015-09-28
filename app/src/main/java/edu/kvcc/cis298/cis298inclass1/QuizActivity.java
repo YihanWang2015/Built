@@ -131,9 +131,21 @@ public class QuizActivity extends AppCompatActivity {
                 // The context, which will usually be Activity.this,
                 // The message, which will usually be a string from strings.xml
                 // The Length, which will be one of the predefined constants.
-                Toast.makeText(QuizActivity.this,
-                                R.string.correct_toast,
-                                Toast.LENGTH_SHORT).show();
+
+
+                //Toast.makeText(QuizActivity.this,
+                               // R.string.correct_toast,
+                               // Toast.LENGTH_SHORT).show();
+
+               // @Override
+               //         public void onclick(View, view){
+                    //call the checkAnswer method that is declared at the top of this class
+                    //it will take in the bool value that they selected, and do the work of determining if the answer
+                    //is correct. either way it will toast the message to the screen.
+                //    checkAnswer(true);
+               // }
+
+
             }
         });
                 // See the notes from TrueButton. It is the same
